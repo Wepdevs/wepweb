@@ -122,6 +122,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-weight:200;
         @apply(--layout-horizontal);
       }
+
+      iron-pages > div.page {
+        height:calc(100vh - 96px);
+        padding:24px;
+        
+      }
+
     </style>
 
     <app-location route="{{route}}"></app-location>
@@ -149,7 +156,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="footer">
           <div>Wep devs</div>
           <div class="space"></div>
-          <div>Wep devs</div>
+          <div>2016 All rights reserved</div>
         </div>
 
 
@@ -181,7 +188,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       ready:function() {
         this.currentPage=this.pages[0].name;
-
       },
       observers: [
         '_routePageChanged(routeData.page)'
@@ -196,7 +202,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _pageChanged: function(page) {
         // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl('my-' + this.currentPage + '.html');
+        var resolvedPageUrl = this.resolveUrl("pages/"+this.currentPage + '.html');
+        console.log(resolvedPageUrl)
         //this.importHref(resolvedPageUrl, null, this._showPage404, true);
       },
 
