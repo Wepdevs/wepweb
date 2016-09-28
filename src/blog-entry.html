@@ -1,0 +1,70 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="blog-entry">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+        }
+        .borderedCard {
+          cursor:pointer;
+          border:1px solid transparent;
+        }
+        .borderedCard:hover {
+          border:1px solid var(--secondary-color);
+        }
+
+      .author {
+        color:rgba(80,90,120);
+        font-size:12px;
+        margin-right:4px;
+      }
+      p {
+        font-size:13px;
+        font-weight: 200;
+      }
+      .int {
+        @apply(--layout-horizontal);
+        align-items: flex-end;
+      }
+      .title {
+        font-size:22px;
+      }
+    </style>
+    <div class="card borderedCard" id="card">
+    <div class="int">
+      <div class="author">[[post.author]]</div>
+      <div style="color:grey;font-size:12px;font-weight:200;font-decoration:italic">wrote</div>
+    </div>
+    <div class="title">[[post.title]]</div>
+    <p class="text" id="text"></p>
+</div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'blog-entry',
+      show:function() {
+
+          this.$.card.style.height=(window.innerHeight-192)+"px"
+
+      },
+      ready: function() {
+        console.log(this.post)
+        this.$.text.innerHTML=(this.post.text);
+      },
+    });
+  </script>
+</dom-module>

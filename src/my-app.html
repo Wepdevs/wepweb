@@ -112,21 +112,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .footer > div {padding:12px;}
       .footer {
         height:48px!important;
-        position:absolute;
-        bottom:0px;
         width:100%;
         color:var(--footer-color);
         background-color:var(--footer-background-color);
-
+        position: absolute;
+        bottom:0px;
         font-size:13px;
         font-weight:200;
         @apply(--layout-horizontal);
       }
 
       iron-pages > div.page {
-        height:calc(100vh - 96px);
+
         padding:24px;
-        
+        overflow-y: auto;
+        max-height:calc(100vh - 96px);
+
+      }
+      iron-pages {
+          min-height:calc(100vh - 96px);
+          max-height:calc(100vh - 96px);
       }
 
     </style>
@@ -144,13 +149,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div>Logo</div>
             <div class="space"></div>
           <template is="dom-repeat" items="[[pages]]">
-            <div name$="[[item.name]]" class$="[[computeMenuClass(item.class)]]" on-tap="goToPage">[[item.name]]</div>
+            <div view$="[[item.view]]" name$="[[item.name]]" class$="[[computeMenuClass(item.class)]]" on-tap="goToPage">[[item.name]]</div>
           </template>
           </div>
         </app-toolbar>
-        <iron-pages attr-for-selected="name" selected="[[currentPage]]">
+        <iron-pages attr-for-selected="name" selected="[[currentPageName]]">
         <template is="dom-repeat" items="[[pages]]">
-          <div class="page" name$="[[item.name]]">[[item.name]]</div>
+          <div class="page" name$="[[item.name]]"></div>
         </template>
         </iron-pages>
         <div class="footer">
@@ -166,51 +171,52 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'my-app',
       goToPage:function(e) {
-          this.set("currentPage",e.target.getAttribute("name"));
-          this.set("routeData.page",this.currentPage)
+          this.set("currentPage",e.target.getAttribute("view"));
+          this.set("routeData.page",e.target.getAttribute("name"))
+          this.set("currentPageName",e.target.getAttribute("name"));
+          this._pageChanged();
       },
       properties: {
         pages:{
           value:[{
-            name:"Home"
+            name:"home",
+            view:"home-view"
           },{
-            name:"Team"
+            name:"projects",
+            view:"projects-view"
           },{
-            name:"Blog",
-            class:"bordered"
+            name:"team",
+            view:"people-page"
+          },{
+            name:"blog",
+            class:"bordered",
+            view:"blog-view"
           }, {
-            name: "Credits"
+            name: "credits",
+            view:"credits-view"
           }]
-        },
-        page: {
-          type: String,
-          reflectToAttribute: true,
-          observer: '_pageChanged'
         }
       },
-      ready:function() {
-        this.currentPage=this.pages[0].name;
-      },
-      observers: [
-        '_routePageChanged(routeData.page)'
-      ],
 
-      _routePageChanged: function(page) {
-        this.page = page || 'view1';
-      },
       computeMenuClass:function(_class) {
         if (_class) {return "menu "+ _class;}
         return "menu";
       },
-      _pageChanged: function(page) {
+      _pageChanged: function() {
         // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl("pages/"+this.currentPage + '.html');
-        console.log(resolvedPageUrl)
-        //this.importHref(resolvedPageUrl, null, this._showPage404, true);
+        if (this.currentPage) {
+          if (!this.querySelector(".page[name='"+this.currentPageName+"']").firstChild) {
+          var resolvedPageUrl = this.resolveUrl(this.currentPage + '.html');
+          this.importHref(resolvedPageUrl, null, this._showPage404, true);
+          var p = document.createElement(this.currentPage);
+          this.querySelector(".page[name='"+this.currentPageName+"']").appendChild(p);
+        }
+      }
       },
 
       _showPage404: function() {
-        this.page = 'view404';
+        this.currentPage="my-view404";
+        this._pageChanged();
       }
     });
   </script>
