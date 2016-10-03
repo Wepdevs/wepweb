@@ -19,6 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 <!--<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">-->
 <!--<link rel="import" href="my-icons.html">-->
 
@@ -135,7 +136,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
     </style>
-
+    <firebase-app auth-domain="wepweb-4cc0e.firebaseapp.com"
+      database-url="https://wepweb-4cc0e.firebaseio.com"
+      api-key="AIzaSyAFyKP0dgU-dwutKxslk6A9cnH4HW3qT6Y">
+    </firebase-app>
+    <firebase-auth id="auth" user="{{user}}" provider="google" on-error="handleError">
+    </firebase-auth>
+    <firebase-document
+      path="/wep/pages"
+      data="{{pages}}">
+    </firebase-document>
     <app-location route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
@@ -154,7 +164,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
         </app-toolbar>
         <iron-pages attr-for-selected="name" selected="[[currentPageName]]">
-        <template is="dom-repeat" items="[[pages]]">
+        <template is="dom-repeat" id="pages" items="[[pages]]">
           <div class="page" name$="[[item.name]]"></div>
         </template>
         </iron-pages>
@@ -174,11 +184,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.set("currentPage",e.target.getAttribute("view"));
           this.set("routeData.page",e.target.getAttribute("name"))
           this.set("currentPageName",e.target.getAttribute("name"));
+
           this._pageChanged();
       },
+      pagesChanged:function() {
+
+      },
+      userChanged:function() {
+        //console.log(this.user);
+      },
       properties: {
+        user:{observer:"userChanged"},
         pages:{
-          value:[{
+          observer:"pagesChanged",
+          value:[
+
+          ]/*[{
             name:"home",
             view:"home-view"
           },{
@@ -194,7 +215,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }, {
             name: "credits",
             view:"credits-view"
-          }]
+          }]*/
         }
       },
 
@@ -203,17 +224,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return "menu";
       },
       _pageChanged: function() {
+        var page = (this.$$(".page[name='"+this.currentPageName+"']"));
         // Load page import on demand. Show 404 page if fails
         if (this.currentPage) {
-          if (!this.querySelector(".page[name='"+this.currentPageName+"']").firstChild) {
-          var resolvedPageUrl = this.resolveUrl(this.currentPage + '.html');
-          this.importHref(resolvedPageUrl, null, this._showPage404, true);
-          var p = document.createElement(this.currentPage);
-          this.querySelector(".page[name='"+this.currentPageName+"']").appendChild(p);
+          if (!page.firstChild) {
+            var resolvedPageUrl = this.resolveUrl(this.currentPage + '.html');
+            this.importHref(resolvedPageUrl, null, this._showPage404, true);
+            var p = document.createElement(this.currentPage);
+            page.appendChild(p);
         }
       }
       },
-
+      ready: function() {
+        this.$.auth.signInAnonymously();
+      },
       _showPage404: function() {
         this.currentPage="my-view404";
         this._pageChanged();

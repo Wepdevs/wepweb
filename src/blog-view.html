@@ -22,7 +22,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
     </style>
-
+    <firebase-document
+      path="/wep/blog"
+      data="{{blogPosts}}">
+    </firebase-document>
     <template is="dom-repeat" items="[[blogPosts]]" as="post">
       <blog-entry post="[[post]]" on-tap="showPost"> </blog-entry>
     </template>
@@ -41,10 +44,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             {
               title:"Post 1",
               author:"Paolo",
+              category:"Tech",
               text:"questo è un post di prova",
               comments:[]
             },
             {
+              category:"Tech",
               title:"Post 1",
               author:"Paolo",
               text:"questo è un <b>post</b> di prova,.<i>questo</i> è un post di prova,questo è un post di prova,questo è un post di prova,questo è un post di prova",

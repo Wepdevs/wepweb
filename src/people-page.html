@@ -31,26 +31,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height:324px;
       }
 
+      .progresses {
+        padding:12px 24px 12px 24px
+      }
+      .progresses > .label {
+        margin:12px 0px 4px 0px!important;
+        font-weight:400;
+        font-size:12px;
+        color:#AAAAAA;
+      }
     </style>
 
     <div class="man-card">
       <div class="card photo">
       </div>
-
+      <div class="progresses">
+      <div class="label">Template repeat</div>
+      <paper-progress value="10"></paper-progress>
+      <div class="label">Promises</div>
+      <paper-progress value="50"></paper-progress>
+      <div class="label">Bever</div>
+      <paper-progress value="80"></paper-progress>
     </div>
-    <div class="man-card">
-      <div class="card photo">
-      </div>
-
     </div>
     <div class="man-card">
       <div class="card photo">
       </div>
       <div class="progresses">
+      <div class="label">forEach</div>
       <paper-progress value="10"></paper-progress>
-      <paper-progress value="10"></paper-progress>
+      <div class="label">.net</div>
+      <paper-progress value="80"></paper-progress>
+      <div class="label">Veciaia</div>
+      <paper-progress value="30"></paper-progress>
+      </div>
     </div>
-    </div>
+
   </template>
 
   <script>
