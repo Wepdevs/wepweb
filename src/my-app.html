@@ -142,10 +142,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </firebase-app>
     <firebase-auth id="auth" user="{{user}}" provider="google" on-error="handleError">
     </firebase-auth>
-    <firebase-document
+    <!--<firebase-document
       path="/wep/pages"
       data="{{pages}}">
-    </firebase-document>
+    </firebase-document>-->
     <app-location route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
@@ -156,7 +156,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <app-toolbar>
           <div class="toolbar" horizontal>
-            <div>Logo</div>
             <div class="space"></div>
           <template is="dom-repeat" items="[[pages]]">
             <div view$="[[item.view]]" name$="[[item.name]]" class$="[[computeMenuClass(item.class)]]" on-tap="goToPage">[[item.name]]</div>
@@ -188,7 +187,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this._pageChanged();
       },
       pagesChanged:function() {
-
+        
       },
       userChanged:function() {
         //console.log(this.user);
@@ -197,9 +196,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         user:{observer:"userChanged"},
         pages:{
           observer:"pagesChanged",
-          value:[
-
-          ]/*[{
+          value:[{
             name:"home",
             view:"home-view"
           },{
@@ -215,7 +212,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }, {
             name: "credits",
             view:"credits-view"
-          }]*/
+          }]
         }
       },
 
