@@ -22,16 +22,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         align-items: center;
         justify-content: space-around;
         flex-direction: column;
+        /*border: 1px grey solid;*/
+        height: 70vh;
       }
 
-      #logo{
-
-          width: 50%;
-          height: 50%;
+      :host div:first-of-type{
+            
+      }
+      
+      h1{
+          color: #444;
       }
 
-      #logo img{
-          width: 100%;
+      #main{
+          border-bottom: solid 4px purple;
+      }
+
+      #main h1{
+          font-size: 3rem;
+      }
+
+      #main,#quote:{
+          flex-grow: 1;
       }
 
       #quote :header{
@@ -39,27 +51,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           font-weight: 900;
           text-transform: capitalize; 
       }
-
-      #div2,#div3{
-          width: 100px;
-          height: 100px;
-          border: solid 1px;
-      }
-
-      #div2{
-          border: red;
-      }
-
-       #div3{
-          border: blue;
-      }
     </style>
 
-    <div id="logo">
-        <img src="../images/WEP.png" ></img>
-        <img src="../images/DEVS.png" ></img>
+    <div></div>
+    <div></div>
+    <div id="main">
+        <h1>WE ARE WEPDEVS</h1>
     </div>
     <div id="quote"><h1>IT'S JUST A MATTER OF EFFORT</h1></div>
+    <div></div>
+    <div></div>
 
   </template>
 

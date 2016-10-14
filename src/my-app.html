@@ -135,6 +135,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           max-height:calc(100vh - 96px);
       }
 
+      #logo{
+        width: 10%;
+        position: absolute;
+        top: 1em;
+      }
+
+      #logo img{
+        width: 100%;
+        min-width: 100px;
+      }
+
     </style>
     <firebase-app auth-domain="wepweb-4cc0e.firebaseapp.com"
       database-url="https://wepweb-4cc0e.firebaseio.com"
@@ -155,6 +166,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
         <app-toolbar>
+          <div id="logo">
+            <img src="../images/WEP.png" ></img>
+            <img src="../images/DEVS.png" ></img>
+         </div>
           <div class="toolbar" horizontal>
             <div class="space"></div>
           <template is="dom-repeat" items="[[pages]]">
