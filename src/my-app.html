@@ -7,7 +7,7 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
-<link href="https://fonts.googleapis.com/css?family=Bungee|Bungee+Shade|Bungee+Inline|Montserrat|Roboto" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Ubuntu|Bungee|Bungee+Shade|Bungee+Inline|Montserrat|Roboto" rel="stylesheet">
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <!--<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
@@ -30,13 +30,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --app-primary-color: #4285f4;
         --app-secondary-color: black;
         --toolbar-font-color:#AAAAAA;
+        --toolbar-hover-font-color: greenyellow;
         --footer-color:#EAEAEA;
         --footer-background-color:#444444;
         --toolbar-font:{
-          font-size:13px;
+          font-size:16px;
           font-weight:400;
           color:var(--toolbar-font-color);
           text-transform: uppercase;
+          font-family: Ubuntu, sans-serif;
         }
         display: block;
       }
@@ -62,7 +64,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       }
       app-toolbar .toolbar[horizontal] > .menu:hover{
-        color:var(--app-primary-color);
+        color:var(--toolbar-hover-font-color);
 
       }
 
@@ -73,11 +75,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .footer .space {@apply(--layout-flex);}
 
       app-toolbar {
-        height:48px;
+        height:88px;
         @apply(--toolbar-font);
-
+        background-color:var(--footer-background-color);
       }
-
 
       app-header {
         color: #fff;
@@ -112,7 +113,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .footer > div {padding:12px;}
       .footer {
-        height:48px!important;
+        height:88px!important;
         width:100%;
         color:var(--footer-color);
         background-color:var(--footer-background-color);
@@ -121,6 +122,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size:13px;
         font-weight:200;
         @apply(--layout-horizontal);
+        @apply(--toolbar-font);
+        @apply(--toolbar-font-color);
       }
 
       iron-pages > div.page {
@@ -136,14 +139,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       #logo{
-        width: 6%;
-        position: absolute;
-        top: 1em;
+        width: 11%;
       }
 
       #logo img{
-        width: 100%;
-       /* min-width: 80px;*/
+       width: 100%;
       }
 
     </style>
@@ -183,7 +183,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </template>
         </iron-pages>
         <div class="footer">
-          <div>WePDeVS</div>
+          <!--<div>WePDeVS</div>-->
           <div class="space"></div>
           <div>2016 All rights reserved</div>
         </div>
