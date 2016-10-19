@@ -75,9 +75,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .footer .space {@apply(--layout-flex);}
 
       app-toolbar {
-        height:88px;
+        height:48px;
         @apply(--toolbar-font);
-        background-color:var(--footer-background-color);
+       background-color:var(--footer-background-color);
+       transition: height 0.5s;
       }
 
       app-header {
@@ -113,7 +114,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .footer > div {padding:12px;}
       .footer {
-        height:88px!important;
+        height:48px;
         width:100%;
         color:var(--footer-color);
         background-color:var(--footer-background-color);
@@ -124,6 +125,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-horizontal);
         @apply(--toolbar-font);
         @apply(--toolbar-font-color);
+        transition: height 0.5s;
       }
 
       iron-pages > div.page {
@@ -140,11 +142,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       #logo{
         width: 11%;
+        max-height: 90%;
       }
 
       #logo img{
        width: 100%;
+      },
+
+      .red{
+        background-color: red !important;
+
       }
+
+
+      #imgContainer{
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 40px;
+        width: 40px;
+
+        transition: width  0.5s, height 0.5s;
+      }
+
 
     </style>
     <firebase-app auth-domain="wepweb-4cc0e.firebaseapp.com"
@@ -165,11 +186,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         tail="{{subroute}}"></app-route>
 
 
-        <app-toolbar>
+        <app-toolbar id="toolbar">
           <div id="logo">
-            <img src="../images/WEP.png" ></img>
-            <img src="../images/DEVS.png" ></img>
+            <div id="imgContainer">
+              <img src="../images/WEP.png" ></img>
+              <img src="../images/DEVS.png" id="devs"></img>
+            </div>
          </div>
+         <div on-tap="cinema">cinema||</div>
+         <div on-tap="normal">normal</div>
           <div class="toolbar" horizontal>
             <div class="space"></div>
           <template is="dom-repeat" items="[[pages]]">
@@ -182,7 +207,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="page" name$="[[item.name]]"></div>
         </template>
         </iron-pages>
-        <div class="footer">
+        <div class="footer" id="footer">
           <!--<div>WePDeVS</div>-->
           <div class="space"></div>
           <div>2016 All rights reserved</div>
@@ -229,6 +254,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             view:"credits-view"
           }]
         }
+      },
+
+      normal: function(){
+        this.$.toolbar.style.height = "48px";
+        this.$.footer.style.height = "48px";
+        this.$.imgContainer.style.height = "40px";
+        this.$.imgContainer.style.width = "40px";
+      },
+
+      cinema: function(){
+        this.$.toolbar.style.height = "88px";
+        this.$.footer.style.height = "88px";
+        this.$.imgContainer.style.height = "80px";
+        this.$.imgContainer.style.width = "80px";
       },
 
       computeMenuClass:function(_class) {
