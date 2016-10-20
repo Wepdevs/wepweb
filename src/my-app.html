@@ -45,7 +45,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             verde #66FF00
             grigio scuro #444444
             giallino #FAFAD2
-            grigio chiaro #AAAAAA  
+            grigio chiaro #AAAAAA
         */
 
         }
@@ -165,7 +165,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
       #imgContainer{
-        
+
         display: flex;
         flex-direction: column;
         justify-content: space-around;
@@ -187,6 +187,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       path="/wep/pages"
       data="{{pages}}">
     </firebase-document>-->
+    <firebase-document
+      path="/wep/colors"
+      data="{{colors}}">
+    </firebase-document>
     <app-location route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
@@ -241,8 +245,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       userChanged:function() {
         //console.log(this.user);
       },
+      colorsChanged:function() {
+        console.log(this.colors);
+      },
       properties: {
         user:{observer:"userChanged"},
+        colors:{observer:"colorsChanged"},
         pages:{
           observer:"pagesChanged",
           value:[{
@@ -274,7 +282,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // this.customStyle['--footer-background-color'] = "red";
         // console.log(this.customStyle);
         // this.updateStyles();
-        
+
       },
 
       cinema: function(){
