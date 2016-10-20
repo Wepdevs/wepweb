@@ -39,18 +39,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           color:var(--toolbar-font-color);
           text-transform: uppercase;
           font-family: Ubuntu, sans-serif;
-
-        /* walter palette
-            viola #800080
-            verde #66FF00
-            grigio scuro #444444
-            giallino #FAFAD2
-            grigio chiaro #AAAAAA  
-        */
-
         }
         display: block;
-      }
+
+      }  
 
       app-toolbar .toolbar[horizontal] {
         @apply(--layout-horizontal);
@@ -262,6 +254,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             name: "credits",
             view:"credits-view"
           }]
+        },
+        colors:{
+          value:{
+            "--app-primary-color": "#800080",
+            "--app-secondary-color": "#66FF00",
+            "--toolbar-font-color": "red",
+            "--footer-background-color": "#444444",
+            "--toolbar-hover-font-color": "#FAFAD2"
+          }
         }
       },
 
@@ -300,8 +301,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       }
       },
+
+
       ready: function() {
         this.$.auth.signInAnonymously();
+
+        Object.keys(this.colors).map(function(c){
+          this.customStyle[c] = this.colors[c];
+        }.bind(this));
+        this.updateStyles();
       },
       _showPage404: function() {
         this.currentPage="my-view404";
