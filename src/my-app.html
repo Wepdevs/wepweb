@@ -20,6 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
+<link rel="import" href="../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
 <!--<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">-->
 <!--<link rel="import" href="my-icons.html">-->
 
@@ -32,7 +33,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --toolbar-font-color:#AAAAAA;
         --toolbar-hover-font-color: greenyellow;
         --footer-color:#EAEAEA;
-        --footer-background-color:#444444;
+        --background-color:#444444;
+        --footer-background-color:green;
         --toolbar-font:{
           font-size:16px;
           font-weight:400;
@@ -179,10 +181,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       path="/wep/pages"
       data="{{pages}}">
     </firebase-document>-->
-    <firebase-document
+   <!--<firebase-document
       path="/wep/colors"
-      data="{{colors}}">
+      data="{{colorz}}">-->
     </firebase-document>
+    <app-localstorage-document key="colors" data="{{localcolors}}"></app-localstorage-document>
     <app-location route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
@@ -238,8 +241,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         //console.log(this.user);
       },
       colorsChanged:function() {
-        console.log(this.colors);
+        console.log('loaded colors');
+        Object.keys(this.colors).map(function(c){
+          this.customStyle[c] = this.colors[c];
+        }.bind(this));
+        this.updateStyles();
       },
+      localcolorsChanged: function(){
+        Object.keys(this.localcolors).map(function(c){
+          this.customStyle[c] = this.localcolors[c];
+        }.bind(this));
+       setTimeout(function() {this.updateStyles()}.bind(this),1000);
+       console.log(this.customStyle)
+      },
+
       properties: {
         user:{observer:"userChanged"},
         colors:{observer:"colorsChanged"},
@@ -263,15 +278,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             view:"credits-view"
           }]
         },
-        colors:{
-          value:{
-            "--app-primary-color": "#800080",
-            "--app-secondary-color": "#66FF00",
-            "--toolbar-font-color": "red",
-            "--footer-background-color": "#444444",
-            "--toolbar-hover-font-color": "#FAFAD2"
-          }
-        }
+        localcolors: {observer:"localcolorsChanged"}
       },
 
       normal: function(){
@@ -299,6 +306,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _pageChanged: function() {
         var page = (this.$$(".page[name='"+this.currentPageName+"']"));
+
+        console.log(page);
+        
         // Load page import on demand. Show 404 page if fails
         if (this.currentPage) {
           if (!page.firstChild) {
@@ -313,11 +323,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready: function() {
         this.$.auth.signInAnonymously();
-
-        Object.keys(this.colors).map(function(c){
-          this.customStyle[c] = this.colors[c];
-        }.bind(this));
-        this.updateStyles();
+          
       },
       _showPage404: function() {
         this.currentPage="my-view404";
