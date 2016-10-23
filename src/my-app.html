@@ -28,13 +28,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style>
       :host {
-        --app-primary-color: #4285f4;
-        --app-secondary-color: black;
-        --toolbar-font-color:#AAAAAA;
-        --toolbar-hover-font-color: greenyellow;
+        --app-primary-color: #800080; /* purple */
+        --app-secondary-color: #66FF00; /* green */
+        --app-tertiary-color: #FAFAD2; /* yellowish */
+        --toolbar-font-color:#AAAAAA;  /* light grey */
+        --toolbar-background-color:#444444;  /* grey */
+        --toolbar-hover-font-color: #66FF00;
         --footer-color:#EAEAEA;
-        --background-color:#444444;
-        --footer-background-color:green;
+        --background-color:#444444;  
+        --footer-background-color:#444444;
         --toolbar-font:{
           font-size:16px;
           font-weight:400;
@@ -80,7 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app-toolbar {
         height:48px;
         @apply(--toolbar-font);
-       background-color:var(--footer-background-color);
+       background-color:var(--toolbar-background-color);
        transition: height 0.5s;
       }
 
@@ -131,6 +133,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         transition: height 0.5s;
       }
 
+      .footer.big, .toolbar.big{
+        height: 88px;
+        transition: height 0.5s;
+      }
+
       iron-pages > div.page {
 
         padding:24px;
@@ -150,13 +157,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       #logo img{
        width: 100%;
-      },
-
-      .red{
-        background-color: red !important;
-
       }
-
 
       #imgContainer{
 
@@ -165,8 +166,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         justify-content: space-around;
         height: 40px;
         width: 40px;
-
         transition: width  0.5s, height 0.5s;
+      }
+
+      #imgContainer.big{
+          height: 80px;
+          width: 80px;
+           transition: width  0.5s, height 0.5s;
       }
 
 
@@ -201,8 +207,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <img src="../images/DEVS.png" id="devs"></img>
             </div>
          </div>
-         <div on-tap="cinema">cinema||</div>
-         <div on-tap="normal">normal</div>
+         <!--<div on-tap="cinema">cinema||</div>
+         <div on-tap="normal">normal</div>-->
           <div class="toolbar" horizontal>
             <div class="space"></div>
           <template is="dom-repeat" items="[[pages]]">
@@ -282,22 +288,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       normal: function(){
-        this.$.toolbar.style.height = "48px";
-        this.$.footer.style.height = "48px";
-        this.$.imgContainer.style.height = "40px";
-        this.$.imgContainer.style.width = "40px";
 
-        // this.customStyle['--footer-background-color'] = "red";
-        // console.log(this.customStyle);
-        // this.updateStyles();
+        this.$.footer.classList = "footer";
+        this.$.toolbar.classList = "toolbar";
+        this.$.imgContainer.classList = "";
 
       },
 
       cinema: function(){
-        this.$.toolbar.style.height = "88px";
-        this.$.footer.style.height = "88px";
-        this.$.imgContainer.style.height = "80px";
-        this.$.imgContainer.style.width = "80px";
+        
+
+        this.$.footer.classList = "footer big";
+        this.$.toolbar.classList = "toolbar big";
+        this.$.imgContainer.classList = "big";
       },
 
       computeMenuClass:function(_class) {
@@ -306,9 +309,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _pageChanged: function() {
         var page = (this.$$(".page[name='"+this.currentPageName+"']"));
-
-        console.log(page);
-        
         // Load page import on demand. Show 404 page if fails
         if (this.currentPage) {
           if (!page.firstChild) {
@@ -317,6 +317,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             var p = document.createElement(this.currentPage);
             page.appendChild(p);
         }
+        if(this.currentPageName == "home"){
+              console.log('cinema');
+              this.cinema();
+            }  else{
+               console.log('normal');
+               console.log(this.currentPage);
+              this.normal();
+         }
       }
       },
 
