@@ -216,13 +216,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </template>
           </div>
         </app-toolbar>
-        <iron-pages attr-for-selected="name" selected="[[currentPageName]]">
+        <iron-pages attr-for-selected="name" selected="[[currentPageName]]" on-iron-items-changed="_ironPagesCreated">
         <template is="dom-repeat" id="pages" items="[[pages]]">
           <div class="page" name$="[[item.name]]"></div>
         </template>
         </iron-pages>
         <div class="footer" id="footer">
-          <!--<div>WePDeVS</div>-->
+          <div>Web Developers based in Trieste, Italy</div>
           <div class="space"></div>
           <div>2016 All rights reserved</div>
         </div>
@@ -241,7 +241,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this._pageChanged();
       },
       pagesChanged:function() {
-
       },
       userChanged:function() {
         //console.log(this.user);
@@ -284,7 +283,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             view:"credits-view"
           }]
         },
-        localcolors: {observer:"localcolorsChanged"}
+        localcolors: {observer:"localcolorsChanged"},
+        firstTime:{value:true}
       },
 
       normal: function(){
@@ -309,29 +309,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _pageChanged: function() {
         var page = (this.$$(".page[name='"+this.currentPageName+"']"));
+        console.log(page);
         // Load page import on demand. Show 404 page if fails
-        if (this.currentPage) {
-          if (!page.firstChild) {
-            var resolvedPageUrl = this.resolveUrl(this.currentPage + '.html');
-            this.importHref(resolvedPageUrl, null, this._showPage404, true);
-            var p = document.createElement(this.currentPage);
-            page.appendChild(p);
+          if (this.currentPage) {
+            if (!page.firstChild) {
+              var resolvedPageUrl = this.resolveUrl(this.currentPage + '.html');
+              this.importHref(resolvedPageUrl, null, this._showPage404, true);
+              var p = document.createElement(this.currentPage);
+              page.appendChild(p);
+          }
+          if(this.currentPageName == "home"){
+                this.cinema();
+              }  else{
+                this.normal();
+          }
         }
-        if(this.currentPageName == "home"){
-              console.log('cinema');
-              this.cinema();
-            }  else{
-               console.log('normal');
-               console.log(this.currentPage);
-              this.normal();
-         }
-      }
       },
 
 
       ready: function() {
         this.$.auth.signInAnonymously();
-          
+
+        
+
+      },
+
+      _ironPagesCreated: function(e){
+
+        if(this.firstTime){
+          this.set("currentPage","home-view");
+          this.set("routeData.page","home")
+          this.set("currentPageName","home");
+          this._pageChanged();
+          this.firstTime = false;
+        }
+      },
+
+      created: function(){
+        
       },
       _showPage404: function() {
         this.currentPage="my-view404";
