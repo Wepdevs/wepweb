@@ -33,6 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --app-tertiary-color: #FAFAD2; /* yellowish */
         --toolbar-font-color:#AAAAAA;  /* light grey */
         --toolbar-background-color:#444444;  /* grey */
+        --app-background-color: #EEEEEE;
         --toolbar-hover-font-color: #66FF00;
         --footer-color:#EAEAEA;
         --background-color:#444444;  
@@ -87,6 +88,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--toolbar-font);
        background-color:var(--toolbar-background-color);
        transition: height 0.5s;
+       border-bottom: solid 4px #333;
       }
 
       app-header {
@@ -127,6 +129,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color:var(--footer-color);
         background-color:var(--footer-background-color);
         position: absolute;
+        border-top: solid 4px #333;
         bottom:0px;
         font-size:13px;
         font-weight:200;
@@ -141,7 +144,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         transition: height 0.5s;
       }
 
-      iron-pages > div.page {
+      contacts-view{
+        transition: background 0.5s;
+        /*background: blue;*/
+      }
+
+      .page:not([name="home"]){
+      /*  background: var(--app-background-color);  */
+      }
+
+      iron-pages > div.page:not([name='contacts']) {
 
         padding:24px;
         overflow-y: auto;
@@ -245,6 +257,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
          	e.target.classList += " current";
           this._pageChanged();
+          
       },
       pagesChanged:function() {
       },
@@ -286,8 +299,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             class:"bordered",
             view:"blog-view"
           }, {
-            name: "credits",
-            view:"credits-view"
+            name: "contacts",
+            view:"contacts-view"
           }]
         },
         localcolors: {observer:"localcolorsChanged"},
