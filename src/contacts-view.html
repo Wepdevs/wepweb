@@ -10,6 +10,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="contacts-view">
@@ -20,23 +23,63 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: flex;
         @apply(--layout-horizontal);
         @apply(--layout-end);
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        flex-direction: row;
         height:calc(100vh - 96px); 
         background: var(--toolbar-background-color);
         transition: background 0.5s;
       }   
 
       div{
-          color: var(--app-primary-color);
+          color: var(--app-secondary-color);
+          flex: 1;
+      }
+
+      :host > div:first-of-type{
+        border-right: 1px solid var(--app-tertiary-color);
+      }
+
+      div h3{
+        text-align: center;
+      }
+
+      paper-input, paper-textarea{
+        
+        
+        color: var(--app-tertiary-color);
+
+         --paper-input-container-color: var(--app-secondary-color);
+        --paper-input-container-focus-color: var(--app-tertiary-color);
+        /*--paper-input-container-invalid-color: green;*/
+        --paper-input-container-input-color: white;
+        --paper-input-container-input:{
+            background: #333;
+           /* border: solid 2px var(--app-secondary-color);  */
+        };
+        --paper-input-container:{
+            padding: 30px;
+        }
+      }
+
+      paper-button{
+        margin: 30px;
       }
       
     </style>
     
-    <div class="space"></div>
-    <div>ciao</div>
-    <div class="space"></div>
+    <div>
+      <h3>Drop us a line</h3>
+      <div>
+        <paper-input type="email" label="name" placeholder="sign your name across my heart"></paper-input>
+        <paper-input type="email" label="email" placeholder="type your email" autovalidate></paper-input>
+        <paper-textarea rows="5" max-rows="5"></paper-textarea>
+        <paper-button raised>Send!</paper-button>
+      </div>
+    </div>
+    <div>
+      <h3>Guest Book</h3>
+    </div>
 
   </template>
 

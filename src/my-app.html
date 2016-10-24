@@ -266,18 +266,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       colorsChanged:function() {
-        console.log('loaded colors');
+       /* console.log('loaded colors');
         Object.keys(this.colors).map(function(c){
           this.customStyle[c] = this.colors[c];
         }.bind(this));
-        this.updateStyles();
+        this.updateStyles();*/
       },
       localcolorsChanged: function(){
-        Object.keys(this.localcolors).map(function(c){
+       /* Object.keys(this.localcolors).map(function(c){
           this.customStyle[c] = this.localcolors[c];
         }.bind(this));
        setTimeout(function() {this.updateStyles()}.bind(this),1000);
-       console.log(this.customStyle)
+       console.log(this.customStyle)  */
       },
 
       properties: {
