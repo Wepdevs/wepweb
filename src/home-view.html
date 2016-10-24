@@ -21,9 +21,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-horizontal);
         @apply(--layout-end);
         align-items: center;
-        justify-content: space-around;
+        justify-content: center;
         flex-direction: column;
-        height: 70vh;
+        height:calc(100vh - 176px); 
       }
 
       :host:after{
@@ -37,11 +37,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             z-index:-1;
             opacity: 0.2;
             background-size: contain;
-      }
-      
-
-      :host div:first-of-type{
-            
       }
       
       h1{
@@ -67,15 +62,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           text-transform: capitalize; 
       }
     </style>
-
-    <div></div>
-    <div></div>
+    <div class="space"></div>
     <div id="main">
         <h1>WePDeVS WE ARE</h1>
     </div>
     <div id="quote"><h1>IT'S JUST A MATTER OF EFFORT</h1></div>
-    <div></div>
-    <div></div>
+    <div class="space"></div>
 
   </template>
 

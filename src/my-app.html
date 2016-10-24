@@ -69,8 +69,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       }
       app-toolbar .toolbar[horizontal] > .menu:hover{
-        color:var(--toolbar-hover-font-color);
-
+        color:var(--app-tertiary-color);
+      }
+      app-toolbar .toolbar[horizontal] > .menu.current
+      {
+        color:var(--app-secondary-color);
       }
 
       app-toolbar .toolbar[horizontal] > .space {
@@ -212,7 +215,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="toolbar" horizontal>
             <div class="space"></div>
           <template is="dom-repeat" items="[[pages]]">
-            <div view$="[[item.view]]" name$="[[item.name]]" class$="[[computeMenuClass(item.class)]]" on-tap="goToPage">[[item.name]]</div>
+            <div view$="[[item.view]]" name$="[[item.name]]" class$="[[computeMenuClass(item)]]" on-tap="goToPage">[[item.name]]</div>
           </template>
           </div>
         </app-toolbar>
@@ -237,14 +240,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.set("currentPage",e.target.getAttribute("view"));
           this.set("routeData.page",e.target.getAttribute("name"))
           this.set("currentPageName",e.target.getAttribute("name"));
-
+          if(this.$$(".current")){
+              this.$$(".current").classList = "menu"; 
+          }
+         	e.target.classList += " current";
           this._pageChanged();
       },
       pagesChanged:function() {
       },
       userChanged:function() {
-        //console.log(this.user);
+        
       },
+
       colorsChanged:function() {
         console.log('loaded colors');
         Object.keys(this.colors).map(function(c){
@@ -303,13 +310,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.imgContainer.classList = "big";
       },
 
-      computeMenuClass:function(_class) {
-        if (_class) {return "menu "+ _class;}
-        return "menu";
+      computeMenuClass:function(item) {
+        var retClass = "menu ";
+        if(item.name == "home"){retClass += "current "}
+        if (item.class) {retClass += item.class;}
+        return retClass;
       },
       _pageChanged: function() {
         var page = (this.$$(".page[name='"+this.currentPageName+"']"));
-        console.log(page);
         // Load page import on demand. Show 404 page if fails
           if (this.currentPage) {
             if (!page.firstChild) {
