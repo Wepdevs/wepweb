@@ -1,0 +1,147 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="project-tile.html">
+
+<dom-module id="projects-view">
+  <template>
+    <style include="shared-styles">
+
+      :host {
+        display: flex;
+        @apply(--layout-horizontal);
+        @apply(--layout-end);
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        height:calc(100vh - 176px);
+        transition: background 0.5s, background-image 0.5s;
+      }
+
+      :host:after{
+          background-image: url('../images/sfondo.png');
+          content: '';
+          position: absolute;
+            top:0px;
+            left: 0px;
+            width:100%;
+            height:100%;
+            z-index:-1;
+            opacity: 0.2;
+            background-size: contain;
+            transition: background 0.5s;
+      }
+
+      :host:before{
+        content: 'Our projects';
+        position: relative;
+        width: 100%;
+        font-size: 2.5rem;
+        text-align: center;
+        text-transform: uppercase;
+        font-family: Ubuntu, sans-serif;
+      }
+      
+      
+    </style>
+   
+
+  <template is="dom-repeat" items="{{projects}}" as="project">
+      <project-tile name="[[project.name]]" type=[[project.type]]></project-tile>
+  </template>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'projects-view',
+
+      properties: {
+        projects:{
+          //observer:"pagesChanged",
+          value:[{
+            name:"project1",
+            type:"library"
+          },{
+            name:"project2",
+            type:"component"
+          },{
+            name:"projectX",
+            type:"webapp"
+          },{
+            name:"project3",
+            type:"website"
+          }, {
+            name: "projectW",
+            type:"blog"
+          },{
+            name:"project2",
+            type:"component"
+          },{
+            name:"projectX",
+            type:"webapp"
+          },{
+            name:"project3",
+            type:"website"
+          }, {
+            name: "projectW",
+            type:"blog"
+          },{
+            name:"project2",
+            type:"component"
+          },{
+            name:"projectX",
+            type:"webapp"
+          },{
+            name:"project3",
+            type:"website"
+          }, {
+            name: "projectW",
+            type:"blog"
+          },{
+            name:"project2",
+            type:"component"
+          },{
+            name:"projectX",
+            type:"webapp"
+          },{
+            name:"project3",
+            type:"website"
+          }, {
+            name: "projectW",
+            type:"blog"
+          },{
+            name:"projectX",
+            type:"webapp"
+          },{
+            name:"project3",
+            type:"website"
+          }, {
+            name: "projectW",
+            type:"blog"
+          },{
+            name:"projectX",
+            type:"webapp"
+          },{
+            name:"project3",
+            type:"website"
+          }, {
+            name: "projectW",
+            type:"blog"
+          }]
+        }
+      }
+    });
+  </script>
+</dom-module>
