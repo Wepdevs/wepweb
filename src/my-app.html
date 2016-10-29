@@ -30,9 +30,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         --app-primary-color: #800080; /* purple */
         --app-secondary-color: #66FF00; /* green */
-        --app-tertiary-color: #FAFAD2; /* yellowish */
+        --app-tertiary-color: #FFC107; /* yellowish */
         --toolbar-font-color:#AAAAAA;  /* light grey */
-        --toolbar-background-color:#444444;  /* grey */
+        --toolbar-background-color:#444444;
+        --borders-dark-color: #333;  /* grey */
         --app-background-color: #EEEEEE;
         --toolbar-hover-font-color: #66FF00;
         --footer-color:#EAEAEA;
@@ -88,7 +89,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--toolbar-font);
        background-color:var(--toolbar-background-color);
        transition: height 0.5s;
-       border-bottom: solid 4px #333;
+       border-bottom: solid 4px var(--borders-dark-color);
       }
 
       app-header {
@@ -155,7 +156,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       iron-pages > div.page:not([name='contacts']) {
 
-        padding:24px;
+       /* padding:24px;  */
         overflow-y: auto;
         max-height:calc(100vh - 96px);
 
