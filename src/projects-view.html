@@ -59,19 +59,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: flex;
         flex-wrap: wrap;
         border: 10px solid var(--borders-dark-color);
-        width: 105vh;
+        width: 750px;
+        max-width: 750px;
         background: var(--borders-dark-color);
         justify-content: center;
       }
 
+      @media screen and (max-width: 251px){
+        #tilesContainer{
+          width: 250px;
+        }
+      } 
+
+      @media screen and (max-width: 501px){
+        #tilesContainer{
+          width: 500px;
+        }
+      } 
+
 
     </style>
    
-    <div id="tilesContainer">
+    <!--<div id="asd">-->
       <template is="dom-repeat" items="{{projects}}" as="project">
             <project-tile name="[[project.name]]" type=[[project.type]] style="background:{{getRandomColor()}}"></project-tile>
        </template>
-    </div>
+    <!--</div>-->
   
 
   </template>
