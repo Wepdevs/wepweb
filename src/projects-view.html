@@ -27,7 +27,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         flex-wrap: wrap;
        /* height:calc(100vh - 176px);  */
         transition: background 0.5s, background-image 0.5s;
-        background: var(--app-primary-color);
+        background: rgba(	102, 255, 0,0.5);
+          padding: 0px 100px;
       }
 
       :host:after{
@@ -54,13 +55,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-family: Ubuntu, sans-serif;
       }
       
-      
+      #tilesContainer{
+        display: flex;
+        flex-wrap: wrap;
+        border: 10px solid var(--borders-dark-color);
+        width: 105vh;
+        background: var(--borders-dark-color);
+        justify-content: center;
+      }
+
+
     </style>
    
-
-  <template is="dom-repeat" items="{{projects}}" as="project">
-      <project-tile name="[[project.name]]" type=[[project.type]]></project-tile>
-  </template>
+    <div id="tilesContainer">
+      <template is="dom-repeat" items="{{projects}}" as="project">
+            <project-tile name="[[project.name]]" type=[[project.type]] style="background:{{getRandomColor()}}"></project-tile>
+       </template>
+    </div>
+  
 
   </template>
 
@@ -142,6 +154,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type:"blog"
           }]
         }
+      },
+
+
+      getRandomColor: function() {
+        console.log("randomizing!");
+        var letters = '0123456789ABCDEF';
+        var color = '#FFCC';
+        for (var i = 0; i < 2; i++ ) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
       }
     });
   </script>
