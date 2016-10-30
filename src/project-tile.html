@@ -48,7 +48,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           font-family: Montserrat;
 
           /*transition: border 0.5s, color 0.5s, background 0.5s;*/
-          transition: border-width 1.0s;
+          transition: all 1.0s;
         }
 
         :host(:hover){
@@ -57,12 +57,57 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           color: var(--app-tertiary-color);*/
           cursor: pointer;
           /*transition: border 0.5s, color 0.5s, background 0.5s;*/
-          transition: border-width 1.0s;
-          border-width: 5px;
+          transition: all 1.0s;
+          border-width: 7px;
+          background: black !important;
+          /*color: var(--app-tertiary-color); */
+         /* border-color: gold; */
         }
 
         :host div{
           vertical-align: middle;
+        }
+
+
+        :host(.component){
+          background: blue;
+        }
+        :host(.component:hover){
+          border-color: blue;
+          color: blue;
+        }
+
+        :host(.webapp){
+          background: var(--app-primary-color);
+        }
+        :host(.webapp:hover){
+          border-color: var(--app-primary-color);
+          color: var(--app-primary-color);
+        }
+
+        :host(.website){
+          background: var(--app-secondary-color);
+        }
+
+        :host(.website:hover){
+          border-color: var(--app-secondary-color);
+          color: var(--app-secondary-color);
+        }
+
+        :host(.library){
+          background-color: #E32636;
+        }
+        :host(.library:hover){
+          border-color: #E32636;
+          color: #E32636;
+        }
+
+        :host(.blog){
+          background-color: #FFD12A;
+        }
+        :host(.blog:hover){
+          border-color: #FFD12A;
+          color: #FFD12A;
         }
 
         /*
@@ -90,12 +135,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
   <template>
-    
         <div>{{name}}</div>
          <div>{{type}}</div>
-      
-
-
   </template>
 
   <script>
