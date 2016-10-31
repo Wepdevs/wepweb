@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="block-renderer.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="blog-entry">
@@ -16,18 +17,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style include="shared-styles">
       :host {
         display: block;
-        padding: 10px;
-        }
-        .borderedCard {
-          cursor:pointer;
-          border:1px solid transparent;
-        }
-        .borderedCard:hover {
-          border:1px solid var(--secondary-color);
+        width:600px;
+        margin-top:24px;
         }
 
+      .category {
+        border:1px solid green;
+        color:green;
+        padding:2px 6px 2px 6px;
+        border-radius:8px;
+        font-size:11px;
+        margin-left:12px;
+        font-weight:bold;
+
+      }
+
       .author {
-        color:rgba(80,90,120);
+        color:#AAAAAA;
         font-size:12px;
         margin-right:4px;
       }
@@ -42,28 +48,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       .title {
         font-size:22px;
       }
+      .space {@apply(--layout-flex);}
+      .header {
+        @apply(--layout-horizontal);
+        align-items:center;
+      }
     </style>
-    <div class="card borderedCard" id="card">
-    <div class="int">
-      <div class="author">[[post.author]]</div>
-      <div style="color:grey;font-size:12px;font-weight:200;font-decoration:italic">wrote</div>
-    </div>
+    <div class="header">
     <div class="title">[[post.title]]</div>
-    <p class="text" id="text"></p>
+    <div class="category">[[post.category]]</div>
+    <div class="space"></div>
+    </div>
+
+    <div class="author">[[post.author]]</div>
+    <div style="height:12px;"></div>
+    <template is="dom-repeat" items="[[post.blocks]]">
+      <block-renderer type="[[item.type]]" data="[[item.data]]"></block-renderer>
+    </template>
 </div>
   </template>
 
   <script>
     Polymer({
       is: 'blog-entry',
+      properties: {
+          post:{}
+      },
       show:function() {
-
-          this.$.card.style.height=(window.innerHeight-192)+"px"
 
       },
       ready: function() {
-        console.log(this.post)
-        this.$.text.innerHTML=(this.post.text);
+
       },
     });
   </script>
