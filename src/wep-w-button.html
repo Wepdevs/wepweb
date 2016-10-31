@@ -29,6 +29,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           color: purple;
           font-size: 15px;
           user-select:none !important;
+          -webkit-touch-callout: none; /* iOS Safari */
+          -webkit-user-select: none;   /* Chrome/Safari/Opera */
+          -khtml-user-select: none;    /* Konqueror */
+          -moz-user-select: none;      /* Firefox */
+          -ms-user-select: none;       /* Internet Explorer/Edge */
+          user-select: none;  
       }
 
       :host(:hover){
@@ -49,11 +55,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
   <template>
-
-      <content></content>
-
-
-
+        <content></content>
   </template>
 
   <script>
