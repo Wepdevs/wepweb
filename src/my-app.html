@@ -67,7 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       }
       app-toolbar .toolbar[horizontal] > .menu.bordered{
-        border:1px solid var(--primary-color);
+        border:1px solid currentColor;
         border-radius:12px;
         margin:0px 4px 0px 4px;
 
@@ -78,6 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app-toolbar .toolbar[horizontal] > .menu.current
       {
         color:var(--app-secondary-color);
+        border-color:currentColor;
       }
 
       app-toolbar .toolbar[horizontal] > .space {
@@ -149,7 +150,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       contacts-view{
         transition: background 0.5s;
-        /*background: blue;*/
       }
 
       .page:not([name="home"]){
@@ -158,7 +158,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       iron-pages > div.page:not([name='contacts']) {
 
-       /* padding:24px;  */
         overflow-y: auto;
         max-height:calc(100vh - 96px);
 
@@ -198,19 +197,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       position: absolute;
       top: 90px;
       left: 10px;
+      background: #ddd;
+      padding: 20px;
+      border: 10px solid gold;
     }
-
-    #loginBtn{
-     /* position: absolute;
-      top: 90px;
-      right: 10px;
-      transition: all 0.5s; */
-    }
-
-    .admin{
-      display: none;
-    }
-
 
     </style>
     <firebase-app auth-domain="wepweb-4cc0e.firebaseapp.com"
@@ -243,14 +233,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <img src="../images/DEVS.png" id="devs"></img>
             </div>
          </div>
-         <!--<div on-tap="cinema">cinema||</div>
-         <div on-tap="normal">normal</div>-->
           <div class="toolbar" horizontal>
             <div class="space"></div>
           <template is="dom-repeat" items="[[pages]]">
             <div view$="[[item.view]]" name$="[[item.name]]" class$="[[computeMenuClass(item)]]" on-tap="goToPage">[[item.name]]</div>
           </template>
-        <div id="loginBtn" on-tap="openLogin">login</div>
+        <!--<div id="loginBtn" on-tap="openLogin">login</div>
+        <div id="editBtn" on-tap="showEdit">edit</div>-->
           </div>
         </app-toolbar>
         <iron-pages attr-for-selected="name" selected="[[currentPageName]]" on-iron-items-changed="_ironPagesCreated">
@@ -265,15 +254,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
 
         <div id="loginDialog">
-        <paper-input id="userLogin" label="email"></paper-input>
-        <paper-input id="pswLogin" label="psw"></paper-input>
-        <div class="buttons">
-          <paper-button on-tap="closeLogin">Cancel</paper-button>
-          <paper-button on-tap="login">Accept</paper-button>
+        <paper-input id="userLogin" label="email" style="margin-bottom: 20px"></paper-input>
+        <paper-input type="password" id="pswLogin" label="psw" style="margin-bottom: 20px"></paper-input>
+          <wep-w-button on-tap="closeLogin">Cancel</wep-w-button>
+          <wep-w-button on-tap="login">Accept</wep-w-button>
         </div>
-      </div>
-
-
 
   </template>
 
@@ -285,9 +270,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.set("routeData.page",e.target.getAttribute("name"))
           this.set("currentPageName",e.target.getAttribute("name"));
           if(this.$$(".current")){
-              this.$$(".current").classList = "menu"; 
+              this.$$(".current").classList.remove("current"); 
           }
-         	e.target.classList += " current";
+         	e.target.classList += " current ";
           this._pageChanged();
           
       },
@@ -417,14 +402,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.$.auth.signInWithEmailAndPassword(email,psw)
           .then(function(res){
             console.log(res);
-            this.$$('.admin').style.display = "inline";
-            this.$.loginDialog.style.display = "none";
+            if(this.$$('.admin'))
+            this.$$('.admin').style.display = "block!important";
+            this.$$('#loginDialog').style.display = "none";
              }.bind(this))
           .catch(function(err){console.log(err);});
+      },
 
-          
-          
-      }
+      showEdit: function(){
+        console.log(Polymer.dom(this).querySelector('div'));
+      }      
     });
   </script>
 </dom-module>
