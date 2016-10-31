@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         flex-wrap: wrap;
         transition: background 0.5s, background-image 0.5s;
         background: black;   /*rgba(	102, 255, 0,0.5);  */
-        padding: 0px 100px;
+        padding: 0px 100px 48px 100px;
       }
 
       :host:after{
@@ -59,7 +59,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
   <template>
-    
+
+      <!--<div on-tap="magic" style="color: yellow">magic</div>-->
    
    
       <template is="dom-repeat" items="{{projects}}" as="project">
@@ -76,6 +77,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     Polymer({
       is: 'projects-view',
+
+      magic: function(){
+        // this.projects.sort(function(a,b){
+        //   return a.name > b.name;
+        // });
+        this.projects.reverse();
+        this.splice('projects', 0, 0);
+        this.notifyPath("projects");
+        
+      },
 
       properties: {
         projects:{
@@ -129,7 +140,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },{
             name:"projectX",
             type:"webapp"
-          },{
+          }/*,{
             name:"project3",
             type:"website"
           }, {
@@ -153,7 +164,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }, {
             name: "projectW",
             type:"blog"
-          }]
+          }*/]
         }
       },
 
