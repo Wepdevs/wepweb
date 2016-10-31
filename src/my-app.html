@@ -30,6 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style>
       :host {
+        --admin-visibility: hidden;
         --app-primary-color: #800080; /* purple */
         --app-secondary-color: #66FF00; /* green */
         --app-tertiary-color: #FFC107; /* yellowish */
@@ -202,6 +203,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       border: 10px solid gold;
     }
 
+    .admin{
+     
+
+          
+    }
+
     </style>
     <firebase-app auth-domain="wepweb-4cc0e.firebaseapp.com"
       database-url="https://wepweb-4cc0e.firebaseio.com"
@@ -238,8 +245,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <template is="dom-repeat" items="[[pages]]">
             <div view$="[[item.view]]" name$="[[item.name]]" class$="[[computeMenuClass(item)]]" on-tap="goToPage">[[item.name]]</div>
           </template>
-        <!--<div id="loginBtn" on-tap="openLogin">login</div>
-        <div id="editBtn" on-tap="showEdit">edit</div>-->
+        <!--<div id="loginBtn" on-tap="openLogin">login</div>-->
+        <div id="editBtn" on-tap="showEdit">edit</div>
           </div>
         </app-toolbar>
         <iron-pages attr-for-selected="name" selected="[[currentPageName]]" on-iron-items-changed="_ironPagesCreated">
@@ -410,7 +417,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       showEdit: function(){
-        console.log(Polymer.dom(this).querySelector('div'));
+        if(this.customStyle['--admin-visibility'] == "hidden" || typeof(this.customStyle['--admin-visibility']) == "undefined"){
+          this.customStyle['--admin-visibility'] = "visible";
+        }
+        else{
+          this.customStyle['--admin-visibility'] = "hidden";
+        }
+        
+        this.updateStyles();
       }      
     });
   </script>

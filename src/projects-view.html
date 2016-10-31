@@ -56,9 +56,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: var(--app-tertiary-color);
       }
 
-       .admin{
-        /*display: none; */
-       }
+       
 
     </style>
 
@@ -69,8 +67,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       path="/wep/projects"
       data="{{projects}}">
     </firebase-query>
-
-      <!--<div class="admin" style="color:gold">admin</div>-->
    
       <template is="dom-repeat" items="{{projects}}" as="project">
             <project-tile class$="[[project.type]]" name="[[project.name]]" type="[[project.type]]" description="[[project.description]]"></project-tile>
