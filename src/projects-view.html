@@ -63,7 +63,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    
    
       <template is="dom-repeat" items="{{projects}}" as="project">
-            <project-tile class$="[[project.type]]" name="[[project.name]]" type=[[project.type]]></project-tile>
+            <project-tile class$="[[project.type]]" name="[[project.name]]" type="[[project.type]]" description="[[project.description]]"></project-tile>
        </template>
        
   <!--
@@ -82,7 +82,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           //observer:"pagesChanged",
           value:[{
             name:"project1",
-            type:"library"
+            type:"library",
+            description: "a nice library for magic!"
           },{
             name:"project2",
             type:"component"
@@ -91,13 +92,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type:"webapp"
           },{
             name:"project3",
-            type:"website"
+            type:"website",
+            description: "a long long description to try how it reacts"
           }, {
             name: "projectW",
-            type:"blog"
+            type:"blog",
+            description: "read it to learn"
           },{
             name:"project2",
-            type:"website"
+            type:"website",
+            description: "basketball team website"
           },{
             name:"projectX",
             type:"library"

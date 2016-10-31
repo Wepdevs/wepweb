@@ -22,7 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           /*border-color: var(--toolbar-background-color); */
           border-style: solid;
-          border-width: 30px;
+          border-width: 25px;
           /*border-right-width: 15px;
           border-bottom-width: 25px;
           border-left-width: 25px;*/
@@ -43,12 +43,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           height: 250px;
           width: 250px;
           box-sizing: border-box;
-          justify-content: center;
-          align-items: center;
+          justify-content: flex-start;
+          align-items: flex-start;
           font-family: Montserrat;
-
           /*transition: border 0.5s, color 0.5s, background 0.5s;*/
           transition: all 1.0s;
+        }
+
+        .name{
+          font-size: 20px;
+          flex: 1;
+        }
+        .type{
+          font-size: 17px;
+          width: 100%;
+        /*  border-bottom: 1px solid black;*/
+          flex: 5;
+          transition: border-bottom-color 1.0s;
+        }
+        :host(:hover) div{
+          /*border-bottom-color: currentColor;  */
+        }
+
+        /*.type:hover{
+          border-bottom-color: currentColor;
+          transition: border-bottom-color 1.0s;
+        }*/
+        .description{
+          font-size: 14px;
+          font-style: italic;
+          flex: 1;
+          max-width: 180px;
         }
 
         :host(:hover){
@@ -70,19 +95,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
         :host(.component){
-          background: blue;
+          background: #2FCEF9;
         }
         :host(.component:hover){
-          border-color: blue;
-          color: blue;
+          border-color: #2FCEF9;
+          color: #2FCEF9;
         }
 
         :host(.webapp){
-          background: var(--app-primary-color);
+          background: #DE2FF9;
         }
         :host(.webapp:hover){
-          border-color: var(--app-primary-color);
-          color: var(--app-primary-color);
+          border-color: #DE2FF9;
+          color: #DE2FF9;
         }
 
         :host(.website){
@@ -135,8 +160,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
   <template>
-        <div>{{name}}</div>
-         <div>{{type}}</div>
+        <div class="name">[[name]]</div>
+        <div class="type">[[type]]</div>
+        <div class="description">[[description]]</div>
   </template>
 
   <script>
