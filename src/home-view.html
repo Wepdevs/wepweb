@@ -10,6 +10,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
+
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="home-view">
@@ -73,14 +76,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           font-weight: 900;
           text-transform: capitalize; 
       }
+
+      .admin{
+        display: none;
+      }
+   
     </style>
     <div class="space"></div>
     <div id="main">
         <h1><span>W</span>e<span>P</span>DeVS WE ARE</h1>
     </div>
     <div id="quote"><h1>IT'S JUST A MATTER OF EFFORT</h1></div>
+    <div class="admin">admin</div>
     <div class="space"></div>
-
   </template>
 
   <script>

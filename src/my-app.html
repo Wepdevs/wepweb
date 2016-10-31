@@ -18,6 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
@@ -192,6 +193,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            transition: width  0.5s, height 0.5s;
       }
 
+       #loginDialog{
+      display:none;
+      position: absolute;
+      top: 90px;
+      left: 10px;
+    }
+
+    #loginBtn{
+     /* position: absolute;
+      top: 90px;
+      right: 10px;
+      transition: all 0.5s; */
+    }
+
+    .admin{
+      display: none;
+    }
+
 
     </style>
     <firebase-app auth-domain="wepweb-4cc0e.firebaseapp.com"
@@ -231,6 +250,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <template is="dom-repeat" items="[[pages]]">
             <div view$="[[item.view]]" name$="[[item.name]]" class$="[[computeMenuClass(item)]]" on-tap="goToPage">[[item.name]]</div>
           </template>
+        <div id="loginBtn" on-tap="openLogin">login</div>
           </div>
         </app-toolbar>
         <iron-pages attr-for-selected="name" selected="[[currentPageName]]" on-iron-items-changed="_ironPagesCreated">
@@ -243,6 +263,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="space"></div>
           <div>2016 All rights reserved</div>
         </div>
+
+        <div id="loginDialog">
+        <paper-input id="userLogin" label="email"></paper-input>
+        <paper-input id="pswLogin" label="psw"></paper-input>
+        <div class="buttons">
+          <paper-button on-tap="closeLogin">Cancel</paper-button>
+          <paper-button on-tap="login">Accept</paper-button>
+        </div>
+      </div>
+
 
 
   </template>
@@ -352,9 +382,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready: function() {
         this.$.auth.signInAnonymously();
-
-        
-
       },
 
       _ironPagesCreated: function(e){
@@ -374,6 +401,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _showPage404: function() {
         this.currentPage="my-view404";
         this._pageChanged();
+      },
+
+      openLogin: function(){
+        this.$.loginDialog.style.display = "block";
+      },
+      closeLogin: function(){
+        this.$.loginDialog.style.display = "none";
+      },
+
+      login: function(){
+          var email = this.$.userLogin.value;
+          var psw = this.$.pswLogin.value;
+
+          this.$.auth.signInWithEmailAndPassword(email,psw)
+          .then(function(res){
+            console.log(res);
+            this.$$('.admin').style.display = "inline";
+            this.$.loginDialog.style.display = "none";
+             }.bind(this))
+          .catch(function(err){console.log(err);});
+
+          
+          
       }
     });
   </script>
