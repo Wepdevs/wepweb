@@ -245,7 +245,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <template is="dom-repeat" items="[[pages]]">
             <div view$="[[item.view]]" name$="[[item.name]]" class$="[[computeMenuClass(item)]]" on-tap="goToPage">[[item.name]]</div>
           </template>
-        <!--<div id="loginBtn" on-tap="openLogin">login</div>-->
+        <div id="loginBtn" on-tap="openLogin">login</div>
         <div id="editBtn" on-tap="showEdit">edit</div>
           </div>
         </app-toolbar>
@@ -263,8 +263,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div id="loginDialog">
         <paper-input id="userLogin" label="email" style="margin-bottom: 20px"></paper-input>
         <paper-input type="password" id="pswLogin" label="psw" style="margin-bottom: 20px"></paper-input>
-          <wep-w-button on-tap="closeLogin">Cancel</wep-w-button>
-          <wep-w-button on-tap="login">Accept</wep-w-button>
+          <wep-w-button transparent on-tap="closeLogin">Cancel</wep-w-button>
+          <wep-w-button transparent on-tap="login">Accept</wep-w-button>
         </div>
 
   </template>
