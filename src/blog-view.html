@@ -9,6 +9,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="blog-entry.html">
 
@@ -16,27 +19,61 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style include="shared-styles">
       :host {
-        display: flex;
-        justify-content: space-around;
+
+
 
 
 
       }
+      .buttons {
+        @apply(--layout-horizontal);
+      }
 
+      .body {
+          display: flex;
+              justify-content: space-around;
+      }
+      .space {
+        @apply(--layout-flex);
+      }
+      paper-icon-button {
+        color:grey;
+      }
     </style>
     <!--<firebase-document
       path="/wep/blog"
-      data="{{blogPosts}}">-->
-    </firebase-document>
+      data="{{blogPosts}}">
+    </firebase-document>-->
+    <firebase-auth id="auth" user="{{user}}" provider="password" on-error="handleError">
+    </firebase-auth>
+    <div class="buttons">
+      <paper-icon-button icon="add-circle"></paper-icon-button>
+      <div class="space"></div>
+      <paper-icon-button icon="social:person" on-tap="makeAuth"></paper-icon-button>
+    </div>
+    <div class="body">
     <template is="dom-repeat" items="[[blogPosts]]" as="post">
       <blog-entry post="[[post]]" on-tap="showPost"> </blog-entry>
     </template>
   </template>
-
+</div>
   <script>
     Polymer({
       showPost:function(){
         e.target.show();
+      },
+      handleError:function(e) {
+        console.log(e);
+      },
+      makeAuth:function() {
+        this.$.auth.signInWithPopup()
+          .then(function(response) {
+            console.log(response);
+            // successful authentication response here
+          })
+          .catch(function(error) {
+            // unsuccessful authentication response here
+          });
       },
       properties: {
 

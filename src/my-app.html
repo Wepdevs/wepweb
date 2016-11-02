@@ -38,7 +38,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --app-background-color: #EEEEEE;
         --toolbar-hover-font-color: #66FF00;
         --footer-color:#EAEAEA;
-        --background-color:#444444;  
+        --background-color:#444444;
         --footer-background-color:#444444;
         --toolbar-font:{
           font-size:16px;
@@ -49,7 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         display: block;
 
-      }  
+      }
 
       app-toolbar .toolbar[horizontal] {
         @apply(--layout-horizontal);
@@ -255,16 +255,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.set("routeData.page",e.target.getAttribute("name"))
           this.set("currentPageName",e.target.getAttribute("name"));
           if(this.$$(".current")){
-              this.$$(".current").classList = "menu"; 
+              this.$$(".current").classList = "menu";
           }
          	e.target.classList += " current";
           this._pageChanged();
-          
+
       },
       pagesChanged:function() {
       },
       userChanged:function() {
-        
+
       },
 
       colorsChanged:function() {
@@ -318,7 +318,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       cinema: function(){
-        
+
 
         this.$.footer.classList = "footer big";
         this.$.toolbar.classList = "toolbar big";
@@ -353,7 +353,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ready: function() {
         this.$.auth.signInAnonymously();
 
-        
+
 
       },
 
@@ -369,7 +369,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       created: function(){
-        
+
       },
       _showPage404: function() {
         this.currentPage="my-view404";
