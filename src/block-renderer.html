@@ -24,6 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var resolvedPageUrl = this.resolveUrl(this.type+"-render" + '.html');
         this.importHref(resolvedPageUrl, null, this._showPage404, true);
         var p = document.createElement(this.type+"-render");
+        console.log(this.data)
         p.data=this.data;
         this.root.appendChild(p);
       },

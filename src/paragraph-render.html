@@ -38,10 +38,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'paragraph-render',
       properties: {
-        data:{}
+        data:{observer:"_dataChanged"}
+      },
+      _dataChanged:function() {
+        this.$$(".text").innerHTML = this.data.text;
       },
       ready: function() {
-        this.$$(".text").innerHTML = this.data.text;
+
       },
     });
   </script>

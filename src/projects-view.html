@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="project-tile.html">
 
 <dom-module id="projects-view">
@@ -28,6 +29,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         transition: background 0.5s, background-image 0.5s;
         background: black;   /*rgba(	102, 255, 0,0.5);  */
         padding: 0px 100px 48px 100px;
+        min-height:calc(100vh - 96px); 
       }
 
       :host:after{
@@ -55,22 +57,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: var(--app-tertiary-color);
       }
 
+       
+
     </style>
 
 
   <template>
 
-      <!--<div on-tap="magic" style="color: yellow">magic</div>-->
-   
+    <firebase-query
+      path="/wep/projects"
+      data="{{projects}}">
+    </firebase-query>
    
       <template is="dom-repeat" items="{{projects}}" as="project">
             <project-tile class$="[[project.type]]" name="[[project.name]]" type="[[project.type]]" description="[[project.description]]"></project-tile>
        </template>
-       
-  <!--
-    style="background:{{getRandomColor()}}"
-    -->
-    
 
   </template>
 
@@ -89,8 +90,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       properties: {
-        projects:{
-          //observer:"pagesChanged",
+        /*projects:{
           value:[{
             name:"project1",
             type:"library",
@@ -140,7 +140,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },{
             name:"projectX",
             type:"webapp"
-          }/*,{
+          },{
             name:"project3",
             type:"website"
           }, {
@@ -164,8 +164,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }, {
             name: "projectW",
             type:"blog"
-          }*/]
-        }
+          }]
+        }*/
       },
 
 

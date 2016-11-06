@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="block-renderer.html">
 <link rel="import" href="shared-styles.html">
 
-<dom-module id="blog-entry">
+<dom-module id="blog-edit">
   <template>
     <style include="shared-styles">
       :host {
@@ -67,12 +67,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <template is="dom-repeat" items="[[post.blocks]]">
       <block-renderer type="[[item.type]]" data="[[item.data]]"></block-renderer>
     </template>
+    <paper-icon-button icon="add-circle" on-tap="newBlock"></paper-icon-button>
 </div>
   </template>
 
   <script>
     Polymer({
-      is: 'blog-entry',
+      newBlock:function(){
+        this.push("post.blocks",{type:"paragraph",data:{title:"Paragrafo2",text:"Lorem asdasdasdjjhsdh"}});
+        console.log(this.post);
+      },
+      is: 'blog-edit',
       properties: {
           post:{}
       },

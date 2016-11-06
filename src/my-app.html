@@ -16,8 +16,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">-->
 <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
@@ -29,6 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <style>
       :host {
+        --admin-visibility: hidden;
         --app-primary-color: #800080; /* purple */
         --app-secondary-color: #66FF00; /* green */
         --app-tertiary-color: #FFC107; /* yellowish */
@@ -66,7 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       }
       app-toolbar .toolbar[horizontal] > .menu.bordered{
-        border:1px solid var(--primary-color);
+        border:1px solid currentColor;
         border-radius:12px;
         margin:0px 4px 0px 4px;
 
@@ -77,6 +80,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app-toolbar .toolbar[horizontal] > .menu.current
       {
         color:var(--app-secondary-color);
+        border-color:currentColor;
       }
 
       app-toolbar .toolbar[horizontal] > .space {
@@ -148,7 +152,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       contacts-view{
         transition: background 0.5s;
-        /*background: blue;*/
       }
 
       .page:not([name="home"]){
@@ -157,7 +160,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       iron-pages > div.page:not([name='contacts']) {
 
-       /* padding:24px;  */
         overflow-y: auto;
         max-height:calc(100vh - 96px);
 
@@ -192,6 +194,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            transition: width  0.5s, height 0.5s;
       }
 
+       #loginDialog{
+      display:none;
+      position: absolute;
+      top: 90px;
+      left: 10px;
+      background: #ddd;
+      padding: 20px;
+      border: 10px solid gold;
+    }
+
+    .admin{
+
+
+
+    }
+
+    #userDialog {
+      border-radius:8px;
+      padding:24px;
+    }
 
     </style>
     <firebase-app auth-domain="wepweb-4cc0e.firebaseapp.com"
@@ -224,13 +246,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <img src="../images/DEVS.png" id="devs"></img>
             </div>
          </div>
-         <!--<div on-tap="cinema">cinema||</div>
-         <div on-tap="normal">normal</div>-->
           <div class="toolbar" horizontal>
             <div class="space"></div>
           <template is="dom-repeat" items="[[pages]]">
             <div view$="[[item.view]]" name$="[[item.name]]" class$="[[computeMenuClass(item)]]" on-tap="goToPage">[[item.name]]</div>
           </template>
+        <div id="loginBtn" on-tap="openLogin">login</div>
+        <div id="editBtn" on-tap="showEdit">edit</div>
           </div>
         </app-toolbar>
         <iron-pages attr-for-selected="name" selected="[[currentPageName]]" on-iron-items-changed="_ironPagesCreated">
@@ -244,6 +266,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div>2016 All rights reserved</div>
         </div>
 
+        <div id="loginDialog">
+        <paper-input id="userLogin" label="email" style="margin-bottom: 20px"></paper-input>
+        <paper-input type="password" id="pswLogin" label="psw" style="margin-bottom: 20px"></paper-input>
+          <wep-w-button transparent on-tap="closeLogin">Cancel</wep-w-button>
+          <wep-w-button transparent on-tap="login">Accept</wep-w-button>
+        </div>
 
   </template>
 
@@ -255,9 +283,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.set("routeData.page",e.target.getAttribute("name"))
           this.set("currentPageName",e.target.getAttribute("name"));
           if(this.$$(".current")){
-              this.$$(".current").classList = "menu";
+              //this.$$(".current").classList = "menu";
+              //Uthis.$$(".current").classList.remove("current");
           }
-         	e.target.classList += " current";
+         	e.target.classList += " current ";
           this._pageChanged();
 
       },
@@ -352,9 +381,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready: function() {
         this.$.auth.signInAnonymously();
-
-
-
       },
 
       _ironPagesCreated: function(e){
@@ -374,6 +400,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _showPage404: function() {
         this.currentPage="my-view404";
         this._pageChanged();
+      },
+
+      openLogin: function(){
+        this.$.loginDialog.style.display = "block";
+      },
+      closeLogin: function(){
+        this.$.loginDialog.style.display = "none";
+      },
+
+      login: function(){
+          var email = this.$.userLogin.value;
+          var psw = this.$.pswLogin.value;
+
+          this.$.auth.signInWithEmailAndPassword(email,psw)
+          .then(function(res){
+            console.log(res);
+            if(this.$$('.admin'))
+            this.$$('.admin').style.display = "block!important";
+            this.$$('#loginDialog').style.display = "none";
+             }.bind(this))
+          .catch(function(err){console.log(err);});
+      },
+
+      showEdit: function(){
+        if(this.customStyle['--admin-visibility'] == "hidden" || typeof(this.customStyle['--admin-visibility']) == "undefined"){
+          this.customStyle['--admin-visibility'] = "visible";
+        }
+        else{
+          this.customStyle['--admin-visibility'] = "hidden";
+        }
+
+        this.updateStyles();
       }
     });
   </script>

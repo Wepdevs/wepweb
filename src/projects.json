@@ -1,0 +1,74 @@
+[{
+            "name":"project1",
+            "type":"library",
+            "description": "a nice library for magic!"
+          },{
+            "name":"project2",
+            "type":"component"
+          },{
+            "name":"projectX",
+            "type":"webapp"
+          },{
+            "name":"project3",
+            "type":"website",
+            "description": "a long long description to try how it reacts"
+          }, {
+            "name": "projectW",
+            "type":"blog",
+            "description": "read it to learn"
+          },{
+            "name":"project2",
+            "type":"website",
+            "description": "basketball team website"
+          },{
+            "name":"projectX",
+            "type":"library"
+          },{
+            "name":"project3",
+            "type":"component"
+          }, {
+            "name": "projectW",
+            "type":"webapp"
+          },{
+            "name":"project2",
+            "type":"component"
+          },{
+            "name":"projectX",
+            "type":"webapp"
+          },{
+            "name":"project3",
+            "type":"library"
+          }, {
+            "name": "projectW",
+            "type":"blog"
+          },{
+            "name":"project2",
+            "type":"component"
+          },{
+            "name":"projectX",
+            "type":"webapp"
+          },{
+            "name":"project3",
+            "type":"website"
+          }, {
+            "name": "projectW",
+            "type":"blog"
+          },{
+            "name":"projectX",
+            "type":"webapp"
+          },{
+            "name":"project3",
+            "type":"library"
+          }, {
+            "name": "projectW",
+            "type":"blog"
+          },{
+            "name":"projectX",
+            "type":"webapp"
+          },{
+            "name":"project3",
+            "type":"website"
+          }, {
+            "name": "projectW",
+            "type":"blog"
+          }]

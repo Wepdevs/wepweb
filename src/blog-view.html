@@ -12,8 +12,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-icons/social-icons.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="blog-entry.html">
+<link rel="import" href="blog-edit.html">
 
 <dom-module id="blog-view">
   <template>
@@ -30,8 +32,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .body {
-          display: flex;
+              display: flex;
+              flex-direction: column;
               justify-content: space-around;
+              max-height: calc(90vh - 128px);
+              height: calc(90vh - 128px);
+              overflow-y: scroll;
       }
       .space {
         @apply(--layout-flex);
@@ -39,48 +45,135 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       paper-icon-button {
         color:grey;
       }
+
+          #userDialog {
+            border-radius:8px;
+            padding:24px;
+          }
+
+paper-input {
+  width:256px;
+}
+
+.bottom {
+  display:flex;
+  justify-content: flex-end;
+}
+
+.fancyButton {
+    padding: 8px;
+    border-radius:4px;
+    font-weight:600;
+    background-color: white;
+    border-color:blue;
+    color:blue;
+    cursor:pointer;
+}
     </style>
-    <!--<firebase-document
+    <firebase-document
       path="/wep/blog"
       data="{{blogPosts}}">
-    </firebase-document>-->
+    </firebase-document>
     <firebase-auth id="auth" user="{{user}}" provider="password" on-error="handleError">
     </firebase-auth>
-    <div class="buttons">
-      <paper-icon-button icon="add-circle"></paper-icon-button>
-      <div class="space"></div>
-      <paper-icon-button icon="social:person" on-tap="makeAuth"></paper-icon-button>
+    <paper-dialog modal id="userDialog">
+      <div>Login</div>
+      <paper-input label="User" value="{{userName}}"></paper-input>
+      <paper-input label="Password" value="{{password}}" type="password"></paper-input>
+      <div class="bottom"><button class="fancyButton" on-tap="makeAuth">LOGIN</button></div>
+    </paper-dialog>
+    <iron-pages id="pages" selected="0">
+      <div>
+        <div class="buttons">
+          <div hidden$="[[readonly]]">
+            <paper-icon-button icon="add-circle" on-tap="newBlog"></paper-icon-button>
+          </div>
+          <div class="space"></div>
+          <paper-icon-button icon="social:person" on-tap="openDialog"></paper-icon-button>
+        </div>
+        <div class="body">
+          <template is="dom-repeat" items="[[blogPosts]]" as="post">
+            <blog-entry post="[[post]]"> </blog-entry>
+          </template>
     </div>
-    <div class="body">
-    <template is="dom-repeat" items="[[blogPosts]]" as="post">
-      <blog-entry post="[[post]]" on-tap="showPost"> </blog-entry>
-    </template>
+  </div>
+    <div>
+      <div class="buttons">
+        <div>
+          <paper-icon-button icon="add" on-tap="back"></paper-icon-button>
+        </div>
+        <div class="space"></div>
+      </div>
+      <div class="body">
+      <template is="dom-if" if="[[!readonly]]" restamp=true>
+        Edit New Post
+        <blog-edit post="[[newPost]]"> </blog-entry>
+      </template>
+
+    </div>
+    <div class="buttons">
+      <div>
+        <paper-icon-button icon="add" on-tap="savePost"></paper-icon-button>
+      </div>
+      <div class="space"></div>
+    </div>
+    </div>
+    </iron-pages>
   </template>
-</div>
+
+
+
+
   <script>
     Polymer({
+      savePost:function() {
+        this.$.pages.selected=0;
+        console.log(this.newPost);
+        this.push("blogPosts",this.newPost)
+      },
+      back:function() {
+        this.$.pages.selected=0;
+      },
+      newBlog:function() {
+        this.$.pages.selected=1;
+        this.newPost={
+          title:"New post aha",
+          category:"Choose",
+          author:"Paolo",
+          blocks:[],
+          comments:[]
+        }
+      },
+      openDialog:function() {
+        this.$.userDialog.toggle();
+      },
       showPost:function(){
         e.target.show();
       },
       handleError:function(e) {
-        console.log(e);
+        console.log(this.readonly);
       },
       makeAuth:function() {
-        this.$.auth.signInWithPopup()
-          .then(function(response) {
-            console.log(response);
-            // successful authentication response here
-          })
-          .catch(function(error) {
-            // unsuccessful authentication response here
-          });
+        this.$.userDialog.toggle();
+        this.$.auth.signInWithEmailAndPassword(this.userName, this.password).catch(function(error) {
+          // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+          // ...
+        }).then(function(e) {console.log(e);});
+      },
+      _userChanged:function(e) {
+        if (e && !e.isAnonymous) {
+          this.set("readonly",false);
+        }
       },
       properties: {
-
+        user:{observer:"_userChanged"},
+        readonly:{value:true},
         blogPosts: {
           type: Array,
           value:[
-            {
+            /*{
               title:"Post 1",
               author:"Paolo",
               category:"Tech",
@@ -93,7 +186,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   {type:"paragraph",data:{title:"Paragrafo2",text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}},
                   //{type:"snippet",data:"function() {}"}
                 ]
-            }
+            }*/
           ]
         }
       },

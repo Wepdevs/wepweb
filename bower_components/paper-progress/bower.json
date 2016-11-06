@@ -1,14 +1,13 @@
 {
   "name": "paper-progress",
-  "version": "1.0.10",
+  "version": "1.0.9",
   "license": "http://polymer.github.io/LICENSE.txt",
   "description": "A material design progress bar",
   "authors": "The Polymer Authors",
   "keywords": [
     "web-components",
     "polymer",
-    "progress",
-    "loading"
+    "progress"
   ],
   "main": "paper-progress.html",
   "repository": {

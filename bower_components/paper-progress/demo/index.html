@@ -49,16 +49,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </demo-snippet>
 
-    <h3>paper-progress can be indeterminate with a custom duration</h3>
+    <h3>paper-progress can be indeterminate</h3>
     <demo-snippet class="centered-demo">
       <template>
-        <style is="custom-style">
-          paper-progress.slow {
-            --paper-progress-indeterminate-cycle-duration: 20s;
-          }
-        </style>
         <paper-progress indeterminate></paper-progress>
-        <paper-progress indeterminate class="slow"></paper-progress>
+        <paper-progress indeterminate value="800" min="100" max="1000"></paper-progress>
       </template>
     </demo-snippet>
 
@@ -89,7 +84,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </div>
 
   <script>
-    var progress, button;
+    var progress, button, animationFrame;
     var repeat, maxRepeat = 5, animating = false;
 
     function nextProgress() {
@@ -104,7 +99,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         progress.value = progress.min;
       }
-      requestAnimationFrame(nextProgress);
+      var animationFrame = requestAnimationFrame(nextProgress);
     }
 
     function startProgress() {
