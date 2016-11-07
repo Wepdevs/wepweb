@@ -283,8 +283,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.set("routeData.page",e.target.getAttribute("name"))
           this.set("currentPageName",e.target.getAttribute("name"));
           if(this.$$(".current")){
-              //this.$$(".current").classList = "menu";
-              //Uthis.$$(".current").classList.remove("current");
+              this.$$(".current").classList.remove("current");
           }
          	e.target.classList += " current ";
           this._pageChanged();
